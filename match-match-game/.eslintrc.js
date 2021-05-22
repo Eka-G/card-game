@@ -22,6 +22,9 @@ module.exports = {
       settings: {
         'import/ignore': [/.html$/],
       },
+      rules: {
+        'no-new': 0,
+      },
     },
   ],
 };
