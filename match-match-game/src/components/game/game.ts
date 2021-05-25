@@ -27,15 +27,20 @@ class Game extends BaseComponent {
       .sort(() => Math.random() - 0.5);
 
     cards.forEach((card) => {
-      card.element.addEventListener('click', () => this.cardHendler(card));
+      card.element.addEventListener('click', (event: MouseEvent) => this.cardHendler(event, card));
     });
 
     this.cardsField.respawnCards(cards);
   }
 
-  private async cardHendler(card: Card) {
+  private async cardHendler(event: MouseEvent, card: Card) {
     if (this.inAnimation) return;
     if (card.isFlipped) return;
+
+    function changeStatus(first: Element, second: Element, classValue: string) {
+      first.classList.toggle(`${classValue}`);
+      second.classList.toggle(`${classValue}`);
+    }
 
     this.inAnimation = true;
     await card.flipToFront();
@@ -46,9 +51,18 @@ class Game extends BaseComponent {
       return;
     }
 
+    const firstCard = this.activeCard.element.lastElementChild?.firstElementChild;
+    const secondCard = card.element.lastElementChild?.firstElementChild;
+
+    if (!(firstCard && secondCard)) return;
+
     if (this.activeCard.image !== card.image) {
+      changeStatus(firstCard, secondCard, 'miss');
+
       await delay(FLIP_DELAY * 1000);
-      await Promise.all([this.activeCard.flipToBack(), card.flipToBack()]);
+      await Promise.all([this.activeCard.flipToBack(), card.flipToBack(), changeStatus(firstCard, secondCard, 'miss')]);
+    } else {
+      changeStatus(firstCard, secondCard, 'match');
     }
 
     this.activeCard = undefined;
