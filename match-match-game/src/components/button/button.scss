@@ -1,0 +1,15 @@
+@import "../../scss/styles.scss";
+
+.button {
+  padding: 10px;
+  font-family: inherit;
+  font-size: 1rem;
+  border: none;
+  box-shadow: 2px 2px 0 $second-color;
+  background-color: $bg-color;
+  transition: $animation-eff;
+
+  &:hover {
+    @include hover-interactive($main-color);
+  }
+}

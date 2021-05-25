@@ -1,10 +1,16 @@
+import Header from './components/header/header';
 import Game from './components/game/game';
 import { ImgCategoryModal } from './models/img-category-modal';
 
 class App {
+  private readonly header: Header;
+
   private readonly game: Game;
 
   constructor(private readonly rootElement: HTMLElement) {
+    this.header = new Header();
+    this.rootElement.appendChild(this.header.element);
+
     this.game = new Game();
     this.rootElement.appendChild(this.game.element);
   }

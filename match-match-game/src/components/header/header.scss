@@ -1,0 +1,16 @@
+@import "../../scss/styles.scss";
+
+.header {
+  @extend %flexible;
+  margin-bottom: 50px;
+  padding-left: 25px;
+  padding-right: 25px;
+  height: 70px;
+  background-color: $main-color;
+
+  &__logo {
+    width: 80px;
+    height: 40px;
+    background: no-repeat center url("../../../public/logo.png");
+  }
+}

@@ -1,0 +1,23 @@
+@import "../../scss/styles.scss";
+
+.nav {
+  height: 100%;
+
+  &__list {
+    @extend %flexible;
+    position: relative;
+    height: 100%;
+  }
+
+  &__item {
+    padding: 25px;
+    height: 100%;
+    text-transform: uppercase;
+    text-align: center;
+    transition: $animation-eff;
+
+    &:hover {
+      @include hover-interactive($main-color); 
+    }
+  }
+}
