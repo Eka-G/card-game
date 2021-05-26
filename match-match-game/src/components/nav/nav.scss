@@ -10,7 +10,6 @@
   }
 
   &__item {
-    padding: 25px;
     height: 100%;
     text-transform: uppercase;
     text-align: center;
@@ -19,5 +18,13 @@
     &:hover {
       @include hover-interactive($main-color); 
     }
+  }
+
+  &__link {
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
 }

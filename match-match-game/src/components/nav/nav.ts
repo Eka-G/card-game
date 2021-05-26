@@ -1,7 +1,7 @@
 import './nav.scss';
 import template from './nav.ejs';
 import BaseComponent from '../base-component';
-import router from '../../router';
+import Link from '../link/link';
 
 class Navigation extends BaseComponent {
   constructor() {
@@ -9,20 +9,14 @@ class Navigation extends BaseComponent {
 
     this.element.innerHTML = template;
 
-    const links: NodeList = this.element.querySelectorAll('.nav__link');
+    const links = [
+      new Link({ title: 'About game', to: '/', className: 'nav__link' }),
+      new Link({ title: 'Best score', to: '/rating', className: 'nav__link' }),
+      new Link({ title: 'Game settings', to: '/settings', className: 'nav__link' }),
+    ];
+    const linksWrapper: NodeList = this.element.querySelectorAll('.nav__item');
 
-    links.forEach((item) =>
-      item.addEventListener('click', (event) => {
-        event.preventDefault();
-
-        if (!(event.currentTarget instanceof HTMLAnchorElement)) return;
-
-        const { href } = event.currentTarget;
-        const url = new URL(href);
-        window.history.pushState({}, '', url.pathname);
-        router.execute(url.pathname);
-      }),
-    );
+    linksWrapper.forEach((linkWrapper, index) => links[index] && linkWrapper.appendChild(links[index].elem));
   }
 }
 
