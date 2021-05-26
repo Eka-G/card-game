@@ -1,4 +1,5 @@
 import './nav.scss';
+import template from './nav.ejs';
 import BaseComponent from '../base-component';
 import router from '../../router';
 
@@ -6,19 +7,7 @@ class Navigation extends BaseComponent {
   constructor() {
     super('nav', ['nav']);
 
-    this.element.innerHTML = `
-      <ul class="nav__list">
-        <li class="nav__item">
-          <a class="nav__link" href="/">About game</a>
-        </li>
-        <li class="nav__item">
-          <a class="nav__link" href="/rating">Best score</a>
-        </li>
-        <li class="nav__item">
-          <a class="nav__link" href="/settings">Game settings</a>
-        </li>
-      </ul>
-    `;
+    this.element.innerHTML = template;
 
     const links: NodeList = this.element.querySelectorAll('.nav__link');
 
