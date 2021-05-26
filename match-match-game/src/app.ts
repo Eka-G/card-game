@@ -2,6 +2,7 @@ import Header from './components/header/header';
 import PageContainer from './components/container/container';
 import Game from './components/game/game';
 import { ImgCategoryModal } from './models/img-category-modal';
+import Router from './components/router/router';
 
 class App {
   private readonly header: Header;
@@ -10,7 +11,38 @@ class App {
 
   private readonly game: Game;
 
+  private readonly router = new Router();
+
   constructor(private readonly rootElement: HTMLElement) {
+    this.router.add({
+      name: '/',
+      enter: () => {
+        console.log('enter');
+      },
+      leave: () => {
+        console.log('leave');
+      },
+    });
+
+    this.router.add({
+      name: '/rating',
+      enter: () => {
+        console.log('enter rating');
+      },
+      leave: () => {
+        console.log('leave rating');
+      },
+    });
+
+    this.router.add({
+      name: '/settings',
+      enter: () => {
+        console.log('enter settings');
+      },
+      leave: () => {
+        console.log('leave settings');
+      },
+    });
     this.header = new Header();
     this.rootElement.appendChild(this.header.element);
 
