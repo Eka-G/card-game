@@ -1,9 +1,12 @@
 import Header from './components/header/header';
+import PageContainer from './components/container/container';
 import Game from './components/game/game';
 import { ImgCategoryModal } from './models/img-category-modal';
 
 class App {
   private readonly header: Header;
+
+  private readonly container: PageContainer;
 
   private readonly game: Game;
 
@@ -11,8 +14,11 @@ class App {
     this.header = new Header();
     this.rootElement.appendChild(this.header.element);
 
+    this.container = new PageContainer();
+    this.rootElement.appendChild(this.container.element);
+
     this.game = new Game();
-    this.rootElement.appendChild(this.game.element);
+    this.container.element.appendChild(this.game.element);
   }
 
   async start() {

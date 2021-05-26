@@ -1,0 +1,13 @@
+@import "../../scss/styles.scss";
+
+.container {
+  @extend %flexible;
+
+  margin: 0 auto;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  justify-content: center;
+  max-width: 1000px;
+  height: calc(100vh - 70px);
+  color: $second-color;
+}

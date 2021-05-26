@@ -2,9 +2,9 @@ import './scss/styles.scss';
 import App from './app';
 
 window.onload = () => {
-  const appElem = document.getElementById('app');
+  const root = document.querySelector('.body');
 
-  if (!appElem) throw Error('App root element not found');
+  if (!root) throw Error('App root element not found');
 
-  new App(appElem).start();
+  new App(root).start();
 };
