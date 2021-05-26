@@ -14,6 +14,7 @@ class Game extends BaseComponent {
 
   constructor() {
     super();
+
     this.cardsField = new CardsField();
     this.element.appendChild(this.cardsField.element);
   }

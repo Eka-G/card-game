@@ -1,5 +1,6 @@
 import './nav.scss';
 import BaseComponent from '../base-component';
+import router from '../../router';
 
 class Navigation extends BaseComponent {
   constructor() {
@@ -28,8 +29,9 @@ class Navigation extends BaseComponent {
         if (!(event.currentTarget instanceof HTMLAnchorElement)) return;
 
         const { href } = event.currentTarget;
-        window.history.pushState({}, '', new URL(href).pathname);
-        window.history.back();
+        const url = new URL(href);
+        window.history.pushState({}, '', url.pathname);
+        router.execute(url.pathname);
       }),
     );
   }

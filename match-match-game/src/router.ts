@@ -1,24 +1,33 @@
 type Func = (href: string) => void;
 
-interface RouterData {
-  name: string;
+interface Route {
+  path: string;
   enter?: Func;
   leave?: Func;
 }
 
 class Router {
-  private list = new Map<string, RouterData>();
+  private list = new Map<string, Route>();
 
   constructor() {
     window.onpopstate = () => {
-      window.location.hash = '/rating';
-      console.log(window.location.hash);
+      this.execute(window.location.pathname);
     };
   }
 
-  public add(data: RouterData) {
-    this.list.set(data.name, data);
+  public execute(pathName: string) {
+    const route = this.list.get(pathName);
+
+    if (!route?.enter) return;
+
+    route.enter(pathName);
+  }
+
+  public add(...routes: Route[]) {
+    routes.forEach((item) => this.list.set(item.path, item));
+
+    this.execute(window.location.pathname);
   }
 }
 
-export default Router;
+export default new Router();
