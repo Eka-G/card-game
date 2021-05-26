@@ -58,6 +58,10 @@ const config = {
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
+        test: /\.ejs$/i,
+        type: 'asset/source',
+      },
+      {
         test: /\.(ico|svg|png|jpg|gif)$/i,
         type: 'asset/resource',
       },
