@@ -10,7 +10,7 @@ class Navigation extends BaseComponent {
     this.element.innerHTML = template;
 
     const links = [
-      new Link({ title: 'About game', to: '/', className: 'nav__link' }),
+      new Link({ title: 'About game', to: '/about', className: 'nav__link' }),
       new Link({ title: 'Best score', to: '/rating', className: 'nav__link' }),
       new Link({ title: 'Game settings', to: '/settings', className: 'nav__link' }),
     ];
