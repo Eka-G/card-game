@@ -1,13 +1,14 @@
+@import "../../scss/abstracts/main-abstracts.scss";
+
 .card-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @extend %flexible;
+  
   justify-content: space-around;
   cursor: pointer;
   perspective: 250px;
 
   &:hover > .card {
-    box-shadow: 2px 2px 2px #2b2b2b;
+    box-shadow: 2px 2px 2px $second-color;
   }
 
   &.active > .card {
@@ -20,7 +21,7 @@
   width: 168px;
   height: 168px;
   transform-style: preserve-3d;
-  transition: all ease .3s;
+  transition: $animation-eff;
 
   &__front,
   &__back,
@@ -51,7 +52,6 @@
   }
 
   &__status {
-    //display: none;
     z-index: 2;
 
     &.match {

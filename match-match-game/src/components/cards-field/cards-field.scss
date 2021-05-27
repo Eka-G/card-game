@@ -1,8 +1,9 @@
+@import "../../scss/abstracts/main-abstracts.scss";
+
 .cards-field {
+  @extend %flexible;
+  
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   display: grid;
   grid-template: 1fr / repeat( 4, 1fr);
   grid-gap: 15px; 
