@@ -5,11 +5,11 @@ import { ImgCategoryModal } from './models/img-category-modal';
 import router from './router';
 
 class App {
-  private readonly header: Header;
+  private readonly header = new Header();
 
-  private readonly container: PageContainer;
+  private readonly container = new PageContainer();
 
-  private readonly game: Game;
+  private readonly game = new Game();
 
   constructor(private readonly rootElement: Element) {
     router.add(
@@ -32,13 +32,9 @@ class App {
         },
       },
     );
-    this.header = new Header();
+
     this.rootElement.appendChild(this.header.element);
-
-    this.container = new PageContainer();
     this.rootElement.appendChild(this.container.element);
-
-    this.game = new Game();
     this.container.element.appendChild(this.game.element);
   }
 

@@ -4,14 +4,12 @@ import Button from '../button/button';
 import User from '../user/user';
 
 class Registration extends BaseComponent {
-  private button: Button;
+  private button = new Button('Sing up', 'reg-btn');
 
-  private user: User;
+  private user = new User();
 
   constructor() {
     super('div', ['registration']);
-    this.button = new Button('Sing up', 'reg-btn');
-    this.user = new User();
 
     this.element.appendChild(this.button.element);
   }
