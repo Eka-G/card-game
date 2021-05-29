@@ -1,4 +1,4 @@
-import router from '../../router';
+import { router } from '../../lib';
 
 interface LinkProps {
   title: string;
