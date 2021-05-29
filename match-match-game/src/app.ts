@@ -3,8 +3,7 @@ import PageContainer from './components/container/container';
 import AboutContent from './pages/about/about';
 import Game from './components/game/game';
 import { ImgCategoryModal } from './models/img-category-modal';
-import router from './router';
-
+import { router, auth } from './lib';
 class App {
   private readonly header = new Header();
 
