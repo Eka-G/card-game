@@ -6,15 +6,26 @@ interface User {
   email: string;
 }
 
-class Authorization {
-  public currentUser: User | null = null;
+type CurrentUser = User | null;
+type Listener = (user: CurrentUser) => void;
 
-  async createUser(user: User) {
+class Authorization {
+  public currentUser: CurrentUser = null;
+
+  private readonly listeners = new Set<Listener>();
+
+  public async createUser(user: User) {
     const newUser = await dataBase.set(Collection.Users, user.email, user);
 
     this.currentUser = user;
 
+    this.listeners.forEach((listener) => listener(this.currentUser));
+
     return newUser;
+  }
+
+  public addListener(listener: Listener) {
+    this.listeners.add(listener);
   }
 }
 

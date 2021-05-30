@@ -2,13 +2,14 @@ import './button.scss';
 import BaseComponent from '../base-component';
 
 class Button extends BaseComponent {
-  constructor(text: string, id: string) {
+  constructor(text: string, id?: string) {
     super('button', ['button']);
 
     this.element.innerHTML = `
       ${text}
     `;
-    this.element.setAttribute('id', `${id}`);
+
+    if (id) this.element.setAttribute('id', `${id}`);
   }
 }
 
