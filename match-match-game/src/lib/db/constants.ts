@@ -3,4 +3,7 @@ export enum Collection {
   Scores = 'scores',
 }
 
+export const COLLECTIONS = [Collection.Users, Collection.Scores];
+export const DB_NAME = 'Eka-G';
+
 export default {};

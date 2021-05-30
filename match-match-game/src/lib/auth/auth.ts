@@ -10,7 +10,7 @@ class Authorization {
   public currentUser: User | null = null;
 
   async createUser(user: User) {
-    const newUser = await dataBase.set(Collection.Users, user);
+    const newUser = await dataBase.set(Collection.Users, user.email, user);
 
     this.currentUser = user;
 

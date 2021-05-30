@@ -1,20 +1,15 @@
-import { Collection } from './constants';
+import { Collection, COLLECTIONS, DB_NAME } from './constants';
 
 class DataBase {
-  private readonly dbReq = indexedDB.open('Eka-G', 1);
+  private readonly dbReq = indexedDB.open(DB_NAME, 1);
 
   private db: IDBDatabase | undefined;
-
-  private users: IDBObjectStore | undefined;
-
-  private scores: IDBObjectStore | undefined;
 
   constructor() {
     this.dbReq.onupgradeneeded = () => {
       this.db = this.dbReq.result;
 
-      this.users = this.db.createObjectStore(Collection.Users, { autoIncrement: true });
-      this.scores = this.db.createObjectStore(Collection.Scores, { autoIncrement: true });
+      COLLECTIONS.forEach((collection) => this.db?.createObjectStore(collection, { keyPath: 'id' }));
     };
 
     this.dbReq.onsuccess = () => {
@@ -26,21 +21,65 @@ class DataBase {
     };
   }
 
-  set(collection: Collection, data: unknown) {
-    return new Promise((res, rej) => {
-      if (!this.db) return;
+  set(collection: Collection, id: string, data: unknown) {
+    return new Promise((resolve, reject) => {
+      if (!this.db) {
+        reject(new Error('Database is not defined'));
+
+        return;
+      }
 
       const tx = this.db.transaction([collection], 'readwrite');
-
       const store = tx.objectStore(collection);
-
-      store.add(data);
+      const req = store.put({ id, data });
 
       tx.oncomplete = () => {
-        res(data);
+        resolve(data);
       };
       tx.onerror = () => {
-        rej();
+        reject(req.error);
+      };
+    });
+  }
+
+  get(collection: Collection, id: string) {
+    return new Promise((resolve, reject) => {
+      if (!this.db) {
+        reject(new Error('Database is not defined'));
+
+        return;
+      }
+
+      const tx = this.db.transaction([collection], 'readwrite');
+      const store = tx.objectStore(collection);
+      const req = store.get(id);
+
+      tx.oncomplete = () => {
+        resolve(req.result);
+      };
+      tx.onerror = () => {
+        reject(req.error);
+      };
+    });
+  }
+
+  getAll(collection: Collection) {
+    return new Promise((resolve, reject) => {
+      if (!this.db) {
+        reject(new Error('Database is not defined'));
+
+        return;
+      }
+
+      const tx = this.db.transaction([collection], 'readwrite');
+      const store = tx.objectStore(collection);
+      const req = store.getAll();
+
+      tx.oncomplete = () => {
+        resolve(req.result);
+      };
+      tx.onerror = () => {
+        reject(req.error);
       };
     });
   }
