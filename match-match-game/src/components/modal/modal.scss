@@ -23,4 +23,9 @@
   min-height: 100px;
   color: $second-color;
   background-color: $bg-color;
+
+  &__title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
 }

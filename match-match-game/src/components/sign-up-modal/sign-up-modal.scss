@@ -1,0 +1,9 @@
+.changed {
+  &.sign-up-form__input:invalid {
+    border: 2px solid red;
+  }
+
+  &.sign-up-form__input:valid {
+    border: 2px solid green;
+  }
+}

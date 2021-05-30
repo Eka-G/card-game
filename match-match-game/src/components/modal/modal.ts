@@ -4,10 +4,14 @@ import './modal.scss';
 import BaseComponent from '../base-component';
 
 class Modal extends BaseComponent {
+  public readonly content: HTMLDivElement | null;
+
   constructor(title?: string) {
     super('div', ['modal-container']);
 
     this.element.innerHTML = template(templateHTML)({ title });
+
+    this.content = this.element.querySelector('.modal__content');
 
     const overlay = this.element.querySelector('.modal-overlay');
 

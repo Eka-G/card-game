@@ -9,7 +9,7 @@
   background-color: $bg-color;
   transition: $animation-eff;
 
-  &:hover {
+  &:not(&[disabled]):hover {
     @include hover-interactive($main-color);
   }
 }

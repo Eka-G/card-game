@@ -3,17 +3,18 @@ import BaseComponent from '../base-component';
 interface InputAttributes {
   name: string;
   type: string;
-  placeholder: string;
-  pattern: string;
+  placeholder?: string;
+  pattern?: string;
+  required?: boolean;
+  className?: string;
 }
 
 class Input extends BaseComponent {
-  constructor(tag: keyof HTMLElementTagNameMap = 'input', styles: string[] = [], attributes: InputAttributes) {
+  constructor({ className = '', ...attributes }: InputAttributes) {
     super('input', ['input']);
 
-    for (let key in attributes) {
-      this.element.setAttribute(key, attributes[key]);
-    }
+    Object.entries(attributes).forEach(([attrName, attrValue]) => this.element.setAttribute(attrName, attrValue));
+    this.element.classList.add(...className.split(' '));
   }
 }
 
