@@ -14,7 +14,7 @@ class Scores {
   public stop() {
     const seconds = Math.round((Date.now() - this.startTime) / 3600);
 
-    return (this.steps - this.errorSteps) * 100 - seconds * 10;
+    return (this.steps - this.errorSteps) * 100 - seconds * 10 || 0;
   }
 }
 
