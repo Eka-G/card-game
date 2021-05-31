@@ -3,6 +3,7 @@ import Modal from '../modal';
 import Form from '../form';
 import Input from '../input';
 import Button from '../button';
+import Avatar from '../avatar/avatar';
 import { auth } from '../../lib';
 
 // const emailRegExp = '^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$)';
@@ -14,8 +15,12 @@ class SignUpModal extends Modal {
 
   private cancelBtn = new Button('Cancel');
 
+  private avatar = new Avatar();
+
   constructor() {
     super('Register new Player');
+
+    this.content?.appendChild(this.avatar.element);
 
     const inputs = [
       new Input({

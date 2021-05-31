@@ -1,9 +1,15 @@
+@import "../../scss/abstracts/main-abstracts.scss";
+
 .changed {
+  outline: none;
+  
   &.sign-up-form__input:invalid {
-    border: 2px solid red;
+    border: 2px solid $error;
+    background-color: $error-bg;
   }
 
   &.sign-up-form__input:valid {
-    border: 2px solid green;
+    border: 2px solid $valid;
+    background-color: $valid-bg;
   }
 }
