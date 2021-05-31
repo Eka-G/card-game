@@ -1,6 +1,7 @@
 import Header from './components/header/header';
 import PageContainer from './components/container/container';
 import AboutContent from './pages/about/about';
+import RatingContent from './pages/rating';
 import Game from './components/game/game';
 import { router, auth, dataBase, Collection } from './lib';
 
@@ -50,9 +51,10 @@ class App {
       {
         path: '/rating',
         enter: () => {
-          this.container.element.innerHTML = `
-            <p>Here will be RATING soon =)</p>
-          `;
+          const rating = new RatingContent();
+
+          this.container.element.innerHTML = '';
+          this.container.element.appendChild(rating.element);
         },
       },
       {

@@ -2,6 +2,8 @@ import BaseComponent from '../base-component';
 import Card from '../card/card';
 import CardsField from '../cards-field/cards-field';
 import delay from '../../shared/delay';
+import Scores from './scores';
+import { auth, dataBase, Collection } from '../../lib';
 
 const FLIP_DELAY = 1.5;
 
@@ -17,6 +19,8 @@ class Game extends BaseComponent {
   private activeCard?: Card;
 
   private inAnimation = false;
+
+  private score?: Scores;
 
   constructor() {
     super();
@@ -47,6 +51,7 @@ class Game extends BaseComponent {
     });
 
     this.cardsField.respawnCards(cards);
+    this.score = new Scores();
   }
 
   private async cardHendler(card: Card) {
@@ -72,6 +77,8 @@ class Game extends BaseComponent {
 
     if (!(firstCard && secondCard)) return;
 
+    this.score?.increment(this.activeCard.image !== card.image);
+
     if (this.activeCard.image !== card.image) {
       changeStatus(firstCard, secondCard, 'miss');
 
@@ -81,8 +88,22 @@ class Game extends BaseComponent {
       changeStatus(firstCard, secondCard, 'match');
     }
 
+    const isFinished = this.cardsField.cards.every((item) => item.isFlipped);
+
+    if (isFinished) await this.finishGame(this.score!.stop());
+
     this.activeCard = undefined;
     this.inAnimation = false;
+  }
+
+  private async finishGame(score: number) {
+    const user = auth.currentUser;
+
+    if (user) {
+      await dataBase.set(Collection.Users, user.email, { ...user, score });
+    }
+
+    console.log(this);
   }
 }
 

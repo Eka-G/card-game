@@ -17,7 +17,7 @@ class DataBase {
     };
 
     this.dbReq.onerror = () => {
-      console.error('Error', this.dbReq.error);
+      alert('Error');
     };
   }
 
@@ -63,8 +63,8 @@ class DataBase {
     });
   }
 
-  getAll(collection: Collection) {
-    return new Promise((resolve, reject) => {
+  getAll<Data = unknown>(collection: Collection) {
+    return new Promise<{ id: string; data: Data }[]>((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database is not defined'));
 
