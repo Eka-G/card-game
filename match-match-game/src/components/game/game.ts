@@ -3,6 +3,7 @@ import Card from '../card/card';
 import CardsField from '../cards-field/cards-field';
 import delay from '../../shared/delay';
 import Scores from './scores';
+import FinishModal from '../finish-modal';
 import { auth, dataBase, Collection } from '../../lib';
 
 const FLIP_DELAY = 1.5;
@@ -90,20 +91,20 @@ class Game extends BaseComponent {
 
     const isFinished = this.cardsField.cards.every((item) => item.isFlipped);
 
-    if (isFinished) await this.finishGame(this.score!.stop());
+    if (isFinished) await Game.finishGame(this.score!.stop());
 
     this.activeCard = undefined;
     this.inAnimation = false;
   }
 
-  private async finishGame(score: number) {
+  private static async finishGame(score: number) {
     const user = auth.currentUser;
 
     if (user) {
       await dataBase.set(Collection.Users, user.email, { ...user, score });
     }
 
-    console.log(this);
+    new FinishModal(score);
   }
 }
 
