@@ -2,6 +2,7 @@ import Header from './components/header/header';
 import PageContainer from './components/container/container';
 import AboutContent from './pages/about/about';
 import RatingContent from './pages/rating';
+import SettingsContent from './pages/settings';
 import Game from './components/game/game';
 import { router, auth, dataBase, Collection } from './lib';
 
@@ -9,8 +10,6 @@ class App {
   private readonly header = new Header();
 
   private readonly container = new PageContainer();
-
-  private readonly about = new AboutContent();
 
   private readonly game = new Game();
 
@@ -30,12 +29,14 @@ class App {
           this.container.element.innerHTML = '';
           this.container.element.appendChild(this.game.element);
 
-          dataBase.get<{ difficulty: number; cardType: string }>(Collection.Settings, '').then(async (record) => {
-            const settings = record?.data || { difficulty: 8, cardType: 'animal' };
+          dataBase.get<{ difficulty: string; cardType: string }>(Collection.Settings, '').then(async (record) => {
+            const settings = record?.data || { difficulty: '4', cardType: 'animal' };
 
             if (!record) {
               dataBase.set(Collection.Settings, '', settings);
             }
+
+            document.documentElement.style.setProperty('--grid-size', settings.difficulty);
 
             this.game.startGame(settings);
           });
@@ -44,8 +45,10 @@ class App {
       {
         path: '/about',
         enter: () => {
+          const about = new AboutContent();
+
           this.container.element.innerHTML = '';
-          this.container.element.appendChild(this.about.element);
+          this.container.element.appendChild(about.element);
         },
       },
       {
@@ -60,9 +63,10 @@ class App {
       {
         path: '/settings',
         enter: () => {
-          this.container.element.innerHTML = `
-            <p>Here will be SETTINGS soon =)</p>
-          `;
+          const settings = new SettingsContent();
+
+          this.container.element.innerHTML = '';
+          this.container.element.appendChild(settings.element);
         },
       },
     );

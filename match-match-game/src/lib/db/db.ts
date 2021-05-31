@@ -17,7 +17,7 @@ class DataBase {
     };
 
     this.dbReq.onerror = () => {
-      alert('Error');
+      throw new Error('Database init error');
     };
   }
 

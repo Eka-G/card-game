@@ -7,10 +7,10 @@ interface LinkProps {
 }
 
 class Link {
-  public readonly elem: HTMLAnchorElement;
+  public readonly element: HTMLAnchorElement;
 
   constructor(props: LinkProps) {
-    this.elem = Link.createElem(props);
+    this.element = Link.createElem(props);
   }
 
   private static createElem({ title, to, className = '' }: LinkProps) {

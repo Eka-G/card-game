@@ -9,7 +9,7 @@ import { auth, dataBase, Collection } from '../../lib';
 const FLIP_DELAY = 1.5;
 
 interface Settings {
-  difficulty: number;
+  difficulty: string;
   cardType: string;
 }
 class Game extends BaseComponent {
@@ -41,9 +41,22 @@ class Game extends BaseComponent {
 
     const categories = await this.categories;
     const images = categories[settings.cardType];
-    const slicedImages = images.slice(images.length - settings.difficulty);
-    const cards = slicedImages
-      .concat(slicedImages)
+    let imagesList = images;
+    const difficulty = parseInt(settings.difficulty, 10);
+    const size = difficulty ** 2 / 2;
+
+    if (size <= imagesList.length) {
+      imagesList = imagesList.slice(0, size);
+    } else {
+      const different = size - imagesList.length;
+
+      for (let i = 0; i < different; i += 1) {
+        imagesList.push(imagesList[i % (imagesList.length - 1)]);
+      }
+    }
+
+    const cards = imagesList
+      .concat(imagesList)
       .map((url) => new Card(url))
       .sort(() => Math.random() - 0.5);
 

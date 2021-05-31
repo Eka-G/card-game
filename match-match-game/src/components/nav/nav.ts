@@ -16,7 +16,7 @@ class Navigation extends BaseComponent {
     ];
     const linksWrapper: NodeList = this.element.querySelectorAll('.nav__item');
 
-    linksWrapper.forEach((linkWrapper, index) => links[index] && linkWrapper.appendChild(links[index].elem));
+    linksWrapper.forEach((linkWrapper, index) => links[index] && linkWrapper.appendChild(links[index].element));
   }
 }
 

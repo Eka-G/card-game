@@ -19,6 +19,10 @@
     &:hover {
       @include hover-interactive($main-color); 
     }
+
+    &.active {
+      color: $second-color;
+    }
   }
 
   &__link {
