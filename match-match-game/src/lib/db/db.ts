@@ -42,8 +42,8 @@ class DataBase {
     });
   }
 
-  get(collection: Collection, id: string) {
-    return new Promise((resolve, reject) => {
+  get<Data = unknown>(collection: Collection, id: string) {
+    return new Promise<{ id: string; data: Data } | undefined>((resolve, reject) => {
       if (!this.db) {
         reject(new Error('Database is not defined'));
 

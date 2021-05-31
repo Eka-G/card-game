@@ -1,15 +1,12 @@
-[
-  {
-    "category": "",
-    "images": [
-      "animal-1.jpg",
-      "animal-2.jpg",
-      "animal-3.jpg",
-      "animal-4.jpg",
-      "animal-5.jpg",
-      "animal-6.jpg",
-      "animal-7.jpg",
-      "animal-8.jpg"
-    ]
-  }
-]
+{
+  "animal": [
+    "animal-1.jpg",
+    "animal-2.jpg",
+    "animal-3.jpg",
+    "animal-4.jpg",
+    "animal-5.jpg",
+    "animal-6.jpg",
+    "animal-7.jpg",
+    "animal-8.jpg"
+  ]
+}

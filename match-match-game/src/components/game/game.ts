@@ -5,8 +5,14 @@ import delay from '../../shared/delay';
 
 const FLIP_DELAY = 1.5;
 
+interface Settings {
+  difficulty: number;
+  cardType: string;
+}
 class Game extends BaseComponent {
   private readonly cardsField = new CardsField();
+
+  private categories: Promise<{ [key: string]: string[] }>;
 
   private activeCard?: Card;
 
@@ -15,25 +21,35 @@ class Game extends BaseComponent {
   constructor() {
     super();
 
+    this.categories = Game.loadImages();
     this.element.appendChild(this.cardsField.element);
   }
 
-  startGame(images: string[]) {
+  static async loadImages(): Promise<{ [key: string]: string[] }> {
+    const res = await fetch('./images.json');
+
+    return res.json();
+  }
+
+  async startGame(settings: Settings) {
     this.cardsField.clear();
 
-    const cards = images
-      .concat(images)
+    const categories = await this.categories;
+    const images = categories[settings.cardType];
+    const slicedImages = images.slice(images.length - settings.difficulty);
+    const cards = slicedImages
+      .concat(slicedImages)
       .map((url) => new Card(url))
       .sort(() => Math.random() - 0.5);
 
     cards.forEach((card) => {
-      card.element.addEventListener('click', (event: MouseEvent) => this.cardHendler(event, card));
+      card.element.addEventListener('click', () => this.cardHendler(card));
     });
 
     this.cardsField.respawnCards(cards);
   }
 
-  private async cardHendler(event: MouseEvent, card: Card) {
+  private async cardHendler(card: Card) {
     if (this.inAnimation) return;
     if (card.isFlipped) return;
 

@@ -2,8 +2,7 @@ import Header from './components/header/header';
 import PageContainer from './components/container/container';
 import AboutContent from './pages/about/about';
 import Game from './components/game/game';
-import { ImgCategoryModal } from './models/img-category-modal';
-import { router } from './lib';
+import { router, auth, dataBase, Collection } from './lib';
 
 class App {
   private readonly header = new Header();
@@ -16,6 +15,31 @@ class App {
 
   constructor(private readonly rootElement: Element) {
     router.add(
+      {
+        // redirect to About page
+        path: '/',
+        enter: () => {
+          if (!auth.currentUser) {
+            window.history.pushState({}, '', '/about');
+            router.execute('/about');
+
+            return;
+          }
+
+          this.container.element.innerHTML = '';
+          this.container.element.appendChild(this.game.element);
+
+          dataBase.get<{ difficulty: number; cardType: string }>(Collection.Settings, '').then(async (record) => {
+            const settings = record?.data || { difficulty: 8, cardType: 'animal' };
+
+            if (!record) {
+              dataBase.set(Collection.Settings, '', settings);
+            }
+
+            this.game.startGame(settings);
+          });
+        },
+      },
       {
         path: '/about',
         enter: () => {
@@ -43,15 +67,6 @@ class App {
 
     this.rootElement.appendChild(this.header.element);
     this.rootElement.appendChild(this.container.element);
-    this.container.element.appendChild(this.game.element);
-  }
-
-  async start() {
-    const res = await fetch('./images.json');
-    const categories: ImgCategoryModal[] = await res.json();
-    const choosenCategory = categories[0];
-    const image = choosenCategory.images.map((name: string) => `${choosenCategory.category}/${name}`);
-    this.game.startGame(image);
   }
 }
 
