@@ -4,7 +4,7 @@ import { router } from '../../lib';
 
 class FinishGameBtn extends Button {
   constructor() {
-    super('Cansel');
+    super('OK');
 
     this.element.classList.add('finish-btn');
 
