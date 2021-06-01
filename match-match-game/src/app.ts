@@ -14,14 +14,16 @@ class App {
   private readonly game = new Game();
 
   constructor(private readonly rootElement: Element) {
+    router.basePath = window.location.pathname;
+
     router.add(
       {
         // redirect to About page
         path: '/',
         enter: () => {
           if (!auth.currentUser) {
-            window.history.pushState({}, '', '/about');
-            router.execute('/about');
+            window.history.pushState({ path: '/about' }, '', router.getPath('/about'));
+            router.execute('/about', false);
 
             return;
           }
@@ -73,6 +75,16 @@ class App {
 
     this.rootElement.appendChild(this.header.element);
     this.rootElement.appendChild(this.container.element);
+  }
+
+  public static getPath(pathName: string) {
+    let normalizeLocation = window.location.pathname;
+
+    if (normalizeLocation.endsWith('/')) {
+      normalizeLocation = normalizeLocation.slice(0, normalizeLocation.length - 1);
+    }
+
+    return normalizeLocation + pathName;
   }
 }
 

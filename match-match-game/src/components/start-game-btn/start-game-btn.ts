@@ -6,8 +6,8 @@ class StartGameBtn extends Buttom {
     super('Start new game');
 
     this.element.addEventListener('click', () => {
-      window.history.pushState({}, '', '/');
-      router.execute('/');
+      window.history.pushState({ path: '/' }, '', router.getHistoryPath('/'));
+      router.execute('/', false);
     });
   }
 }

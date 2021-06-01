@@ -32,10 +32,10 @@ class Link {
   }
 
   private static forawrdTo(to: string) {
-    if (window.location.pathname === to) return;
+    if (router.getPath(window.location.pathname) === router.getPath(to)) return;
 
-    window.history.pushState({}, '', to);
-    router.execute(to);
+    window.history.pushState({ path: to }, '', router.getHistoryPath(to));
+    router.execute(to, false);
   }
 }
 

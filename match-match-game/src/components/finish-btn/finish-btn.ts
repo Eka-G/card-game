@@ -9,7 +9,8 @@ class FinishGameBtn extends Button {
     this.element.classList.add('finish-btn');
 
     this.element.addEventListener('click', () => {
-      router.execute('/rating');
+      window.history.pushState({ path: '/rating' }, '', router.getHistoryPath('/rating'));
+      router.execute('/rating', false);
     });
   }
 }
